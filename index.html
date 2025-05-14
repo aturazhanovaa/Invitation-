@@ -651,34 +651,34 @@ button:hover {
   </div>
   <img src="https://static.tildacdn.com/tild6433-3135-4636-b232-613237353237/Group_6.png" class="ornament" alt="Kazakh Ornament" style="transform: rotate(180deg);">
 
-</div>
-<div class="container">
-  <h1 style="font-family: 'Marck Script', cursive;">Тойға келесіз бе?</h1>
+<form id="myForm">
+  <input type="text" id="name" name="name" placeholder="Есіміңіз">
+  
+  <label><input type="radio" name="answer" value="жұбайыммен келемін"> жұбайыммен келемін</label><br>
+  <label><input type="radio" name="answer" value="жалғыз келемін"> жалғыз келемін</label><br>
+  <label><input type="radio" name="answer" value="өкінішке орай келе алмаймын"> өкінішке орай келе алмаймын</label><br>
 
-  <form action="https://docs.google.com/forms/d/e/1FAIpQLSd3zSHq4GodZ9UTSdj3DgPWXiWrZpiENj_ZnnwKKQhAyxFB5Q/formResponse"
-        method="POST" target="hidden_iframe" onsubmit="showPopup();">
+  <button type="submit">Жіберу</button>
+</form>
 
-    <input type="text" name="entry.1741334013" placeholder="Есіміңіз" required
-           style="width: 100%; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 12px; margin-bottom: 20px;">
+<script>
+  document.getElementById("myForm").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    <div class="radio-group" style="text-align: left; margin-bottom: 20px; font-size: 16px;">
-      <label><input type="radio" name="entry.1231877336" value="жұбайыммен келемін" required> Жұбайыммен келемін</label><br>
-      <label><input type="radio" name="entry.1231877336" value="жалғыз келемін"> Жалғыз келемін</label><br>
-      <label><input type="radio" name="entry.1231877336" value="өкінішке орай келе алмаймын"> Өкінішке орай келе алмаймын</label>
-    </div>
+    const formData = new FormData();
+    formData.append("entry.1741334013", document.getElementById("name").value);
+    formData.append("entry.1231877336", document.querySelector('input[name="answer"]:checked').value);
 
-    <button type="submit"
-            style="width: 100%; background-color: #8B0000; color: white; padding: 12px; font-size: 18px; border: none; border-radius: 10px; cursor: pointer;">
-      Жіберу
-    </button>
-  </form>
-
-  <iframe name="hidden_iframe" style="display:none;"></iframe>
-
-  <div id="popup" style="display:none; margin-top: 20px; font-size: 18px; color: green;">
-    ✅ Жауабыңыз қабылданды! Рақмет!
-  </div>
-</div>
+    fetch("https://docs.google.com/forms/d/e/1FAIpQLSd3zSHq4GodZ9UTSdj3DgPWXiWrZpiENj_ZnnwKKQhAyxFB5Q/formResponse", {
+      method: "POST",
+      mode: "no-cors",
+      body: formData
+    }).then(() => {
+      alert("Жіберілді!");
+      document.getElementById("myForm").reset();
+    });
+  });
+</script>
 
 <script>
   function showPopup() {
